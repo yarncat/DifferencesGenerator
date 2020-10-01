@@ -11,3 +11,5 @@ Difference generator - is the utility for comparing two configuration files and 
 ## How it works:
 
 [Package installation and example of compare of two flat JSON files](https://asciinema.org/a/RsnN7zB0jfCgGlOyCriVHYDiF)  
+
+[Example of compare of two flat YAML files](https://asciinema.org/a/lnJMVzU4RKHEWtvSsluPXGJiR)  
