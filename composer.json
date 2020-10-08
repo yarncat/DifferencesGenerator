@@ -15,7 +15,8 @@
     "autoload": {
         "files": [
             "src/Gendiff.php",
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Formatter.php"
         ]
     },
     "require": {
