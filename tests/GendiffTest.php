@@ -8,31 +8,27 @@ use function DifferencesGenerator\Gendiff\genDiff;
 
 class GendiffTest extends TestCase
 {
-    public function testGendiffForFlatJson()
+    public const DIR = 'tests/fixtures/';
+
+    /**
+     * @dataProvider fileProvider
+     */
+
+    public function testGendiff($firstFile, $secondFile, $format, $expectedResult)
     {
-        $expected = file_get_contents('tests/fixtures/flatFilesDiff.txt');
-        $actualJson = genDiff('tests/fixtures/fileFlat1.json', 'tests/fixtures/fileFlat2.json');
-        $this->expectOutputString($expected, $actualJson);
+        $expected = file_get_contents(self::DIR . $expectedResult);
+        $actual = genDiff(self::DIR . $firstFile, self::DIR . $secondFile, $format);
+        $this->assertEquals($expected, $actual);
     }
 
-    public function testGendiffForFlatYaml()
+    public function fileProvider()
     {
-        $expected = file_get_contents('tests/fixtures/flatFilesDiff.txt');
-        $actualYaml = genDiff('tests/fixtures/fileFlat1.yml', 'tests/fixtures/fileFlat2.yml');
-        $this->expectOutputString($expected, $actualYaml);
-    }
-
-    public function testGendiffForNestedJson()
-    {
-        $expected = file_get_contents('tests/fixtures/nestedFilesDiff.txt');
-        $actualJson = genDiff('tests/fixtures/fileNested1.json', 'tests/fixtures/fileNested2.json');
-        $this->expectOutputString($expected, $actualJson);
-    }
-
-    public function testGendiffForNestedYaml()
-    {
-        $expected = file_get_contents('tests/fixtures/nestedFilesDiff.txt');
-        $actualYaml = genDiff('tests/fixtures/fileNested1.yml', 'tests/fixtures/fileNested2.yml');
-        $this->expectOutputString($expected, $actualYaml);
+        return [
+            ['flatFile1.json', 'flatFile2.json', 'stylish', 'flatFilesDiff.txt'],
+            ['nestedStructure1.json', 'nestedStructure2.json', 'stylish', 'nestedStructuresDiff.txt'],
+            ['composer1.json', 'composer2.json', 'stylish', 'composerDiff.txt'],
+            ['flatFile1.yml', 'flatFile2.yml', 'stylish', 'flatFilesDiff.txt'],
+            ['nestedStructure1.yml', 'nestedStructure2.yml', 'stylish', 'nestedStructuresDiff.txt']
+        ];
     }
 }

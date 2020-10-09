@@ -5,14 +5,14 @@ namespace DifferencesGenerator\Gendiff;
 use function DifferencesGenerator\Parsers\parseFile;
 use function DifferencesGenerator\Formatter\render;
 
-function genDiff($firstFile, $secondFile)
+function genDiff($firstFile, $secondFile, $format = 'stylish')
 {
     $file1 = parseFile($firstFile);
     $file2 = parseFile($secondFile);
 
     $tree = buildTree($file1, $file2);
     $result = render($tree);
-    echo "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
+    return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
 }
 
 function buildTree($data1, $data2)

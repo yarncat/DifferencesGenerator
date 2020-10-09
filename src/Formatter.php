@@ -10,7 +10,7 @@ function boolToString($value)
     return $value;
 }
 
-function toString($value, $level)
+function toString($value, $level = 0)
 {
     $indent = str_repeat(' ', ($level + 1) * 4);
     $extraIndent = str_repeat(' ', $level * 4);
@@ -51,7 +51,6 @@ function flatten($array)
 
 function render($tree, $level = 1)
 {
-    $tree = (array)$tree;
     $result = array_reduce($tree, function ($acc, $element) use ($level) {
         $indent = str_repeat(' ', 4 * $level);
         $extraIndent = str_repeat(' ', 4 * $level - 2);
@@ -76,6 +75,5 @@ function render($tree, $level = 1)
         }
         return $acc;
     }, []);
-    
     return flatten($result);
 }

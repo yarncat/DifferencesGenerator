@@ -32,4 +32,4 @@ $args = Docopt::handle(DOC, array('version'=>'GenDiff version 1.0.0'));
 $pathToFirstFile = $args->args['<firstFile>'];
 $pathToSecondFile = $args->args['<secondFile>'];
 
-genDiff($pathToFirstFile, $pathToSecondFile);
+echo genDiff($pathToFirstFile, $pathToSecondFile);
