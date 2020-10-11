@@ -17,3 +17,5 @@ Difference generator - is the utility for comparing two configuration files and 
 [Examples of compare of two JSON files with nested structure](https://asciinema.org/a/buhTeUvwmsg5ejOSzonLRlZlG)  
 
 [Example of output the result in plain format](https://asciinema.org/a/Sytf8fIe1SRCIKbyZa1MERgTj)  
+
+[Example of output the result in JSON format](https://asciinema.org/a/y4YE1eSRoxLWpd5WjPFCjFhxk)  
