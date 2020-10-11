@@ -3,7 +3,8 @@
 namespace DifferencesGenerator\Gendiff;
 
 use function DifferencesGenerator\Parsers\parseFile;
-use function DifferencesGenerator\Formatter\render;
+use function DifferencesGenerator\Formatters\Plain\renderPlain;
+use function DifferencesGenerator\Formatters\Stylish\renderStylish;
 
 function genDiff($firstFile, $secondFile, $format = 'stylish')
 {
@@ -11,7 +12,12 @@ function genDiff($firstFile, $secondFile, $format = 'stylish')
     $file2 = parseFile($secondFile);
 
     $tree = buildTree($file1, $file2);
-    $result = render($tree);
+
+    if ($format === 'plain') {
+        $result = renderPlain($tree);
+        return implode("\n", $result) . "\n";
+    }
+    $result = renderStylish($tree);
     return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
 }
 

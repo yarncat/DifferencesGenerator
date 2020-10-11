@@ -16,7 +16,9 @@
         "files": [
             "src/Gendiff.php",
             "src/Parsers.php",
-            "src/Formatter.php"
+            "src/Formatters/Formatter.php",
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php"
         ]
     },
     "require": {

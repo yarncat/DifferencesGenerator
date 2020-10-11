@@ -31,5 +31,6 @@ $args = Docopt::handle(DOC, array('version'=>'GenDiff version 1.0.0'));
 
 $pathToFirstFile = $args->args['<firstFile>'];
 $pathToSecondFile = $args->args['<secondFile>'];
+$format = $args->args['--format'];
 
-echo genDiff($pathToFirstFile, $pathToSecondFile);
+echo genDiff($pathToFirstFile, $pathToSecondFile, $format);

@@ -26,6 +26,7 @@ class GendiffTest extends TestCase
         return [
             ['flatFile1.json', 'flatFile2.json', 'stylish', 'flatFilesDiff.txt'],
             ['nestedStructure1.json', 'nestedStructure2.json', 'stylish', 'nestedStructuresDiff.txt'],
+            ['nestedStructure1.json', 'nestedStructure2.json', 'plain', 'plainDiff.txt'],
             ['composer1.json', 'composer2.json', 'stylish', 'composerDiff.txt'],
             ['flatFile1.yml', 'flatFile2.yml', 'stylish', 'flatFilesDiff.txt'],
             ['nestedStructure1.yml', 'nestedStructure2.yml', 'stylish', 'nestedStructuresDiff.txt']

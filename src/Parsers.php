@@ -10,7 +10,8 @@ function parseFile($file)
 
     if ($fileExtension === 'json') {
         return $dataToArray = json_decode(file_get_contents($file));
-    } elseif ($fileExtension === 'yml' || $fileExtension === 'yaml') {
+    }
+    if ($fileExtension === 'yml' || $fileExtension === 'yaml') {
         return $dataToArray = Yaml::parseFile($file, Yaml::PARSE_OBJECT_FOR_MAP);
     }
 }
