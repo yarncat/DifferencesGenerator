@@ -3,6 +3,7 @@
 namespace DifferencesGenerator\Gendiff;
 
 use function DifferencesGenerator\Parsers\parseFile;
+use function DifferencesGenerator\Formatters\Json\renderJson;
 use function DifferencesGenerator\Formatters\Plain\renderPlain;
 use function DifferencesGenerator\Formatters\Stylish\renderStylish;
 
@@ -16,6 +17,9 @@ function genDiff($firstFile, $secondFile, $format = 'stylish')
     if ($format === 'plain') {
         $result = renderPlain($tree);
         return implode("\n", $result) . "\n";
+    }
+    if ($format === 'json') {
+        return renderJson($tree) . "\n";
     }
     $result = renderStylish($tree);
     return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
