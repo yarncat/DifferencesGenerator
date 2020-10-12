@@ -16,13 +16,11 @@ function genDiff($firstFile, $secondFile, $format)
 
     switch ($format) {
         case 'json':
-            return renderJson($tree) . "\n";
+            return renderJson($tree);
         case 'plain':
-            $result = renderPlain($tree);
-            return implode("\n", $result) . "\n";
+            return renderPlain($tree);
         case 'stylish':
-            $result = renderStylish($tree);
-            return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
+            return renderStylish($tree);
         default:
             throw new \Exception("Unknown output format: '{$format}'!\n");
     }
