@@ -1,9 +1,9 @@
 <?php
 
-namespace DifferencesGenerator\Formatters\Plain;
+namespace Differ\Formatters\Plain;
 
-use function DifferencesGenerator\Formatters\Formatter\boolToString;
-use function DifferencesGenerator\Formatters\Formatter\flatten;
+use function Differ\Formatters\Formatter\boolToString;
+use function Differ\Formatters\Formatter\flatten;
 
 function normalize($value)
 {

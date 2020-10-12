@@ -1,10 +1,10 @@
 <?php
 
-namespace DifferencesGenerator\Formatters\Stylish;
+namespace Differ\Formatters\Stylish;
 
-use function DifferencesGenerator\Formatters\Formatter\flatten;
-use function DifferencesGenerator\Formatters\Formatter\makeIndent;
-use function DifferencesGenerator\Formatters\Formatter\toString;
+use function Differ\Formatters\Formatter\flatten;
+use function Differ\Formatters\Formatter\makeIndent;
+use function Differ\Formatters\Formatter\toString;
 
 function renderStylish($tree, $level = 1)
 {

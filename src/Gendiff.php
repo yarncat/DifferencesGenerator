@@ -1,28 +1,31 @@
 <?php
 
-namespace DifferencesGenerator\Gendiff;
+namespace Differ\Gendiff;
 
-use function DifferencesGenerator\Parsers\parseFile;
-use function DifferencesGenerator\Formatters\Json\renderJson;
-use function DifferencesGenerator\Formatters\Plain\renderPlain;
-use function DifferencesGenerator\Formatters\Stylish\renderStylish;
+use function Differ\Parsers\parseFile;
+use function Differ\Formatters\Json\renderJson;
+use function Differ\Formatters\Plain\renderPlain;
+use function Differ\Formatters\Stylish\renderStylish;
 
-function genDiff($firstFile, $secondFile, $format = 'stylish')
+function genDiff($firstFile, $secondFile, $format)
 {
     $file1 = parseFile($firstFile);
     $file2 = parseFile($secondFile);
 
     $tree = buildTree($file1, $file2);
 
-    if ($format === 'plain') {
-        $result = renderPlain($tree);
-        return implode("\n", $result) . "\n";
+    switch ($format) {
+        case 'json':
+            return renderJson($tree) . "\n";
+        case 'plain':
+            $result = renderPlain($tree);
+            return implode("\n", $result) . "\n";
+        case 'stylish':
+            $result = renderStylish($tree);
+            return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
+        default:
+            throw new \Exception("Unknown output format: '{$format}'!\n");
     }
-    if ($format === 'json') {
-        return renderJson($tree) . "\n";
-    }
-    $result = renderStylish($tree);
-    return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
 }
 
 function buildTree($data1, $data2)

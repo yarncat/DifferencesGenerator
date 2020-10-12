@@ -1,10 +1,10 @@
 <?php
 
-namespace DifferencesGenerator\Tests;
+namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use function DifferencesGenerator\Gendiff\genDiff;
+use function Differ\Gendiff\genDiff;
 
 class GendiffTest extends TestCase
 {
@@ -29,8 +29,28 @@ class GendiffTest extends TestCase
             ['nestedStructure1.json', 'nestedStructure2.json', 'plain', 'plainDiff.txt'],
             ['nestedStructure1.json', 'nestedStructure2.json', 'json', 'jsonDiff.txt'],
             ['composer1.json', 'composer2.json', 'stylish', 'composerDiff.txt'],
-            ['flatFile1.yml', 'flatFile2.yml', 'stylish', 'flatFilesDiff.txt'],
+            ['flatFile1.yaml', 'flatFile2.yaml', 'stylish', 'flatFilesDiff.txt'],
             ['nestedStructure1.yml', 'nestedStructure2.yml', 'stylish', 'nestedStructuresDiff.txt']
+        ];
+    }
+
+    /**
+     * @dataProvider uncorrectFileProvider
+     */
+
+    public function testException($firstFile, $secondFile, $format, $expected)
+    {
+        $this->expectExceptionMessage($expected);
+        genDiff(self::DIR . $firstFile, self::DIR . $secondFile, $format);
+    }
+
+    public function uncorrectFileProvider()
+    {
+        return [
+            ['flatFile.json', 'flatFile2.json', 'stylish',
+                "File 'tests/fixtures/flatFile.json' is not exist or the specified path is incorrect\n"],
+            ['jsonDiff.txt', 'plainDiff.txt', 'plain', "Unsupported or unknown format: 'txt'\n"],
+            ['flatFile1.json', 'flatFile2.json', 'lolkek', "Unknown output format: 'lolkek'!\n"]
         ];
     }
 }

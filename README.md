@@ -6,7 +6,18 @@
 
 ## About
 
-Difference generator - is the utility for comparing two configuration files and determining their differences.
+Differences generator - is the CLI utility for comparing two configuration files and determining their differences.  
+
+Utility features:
+
+-   supported input formats: JSON, YML/YAML;
+-   report generation/output in JSON, plain (human readable) and stylish (structured) format.
+
+## Install
+
+```sh
+$ composer global require martines/differences-generator
+```
 
 ## How it works:
 

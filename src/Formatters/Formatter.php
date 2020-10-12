@@ -1,6 +1,6 @@
 <?php
 
-namespace DifferencesGenerator\Formatters\Formatter;
+namespace Differ\Formatters\Formatter;
 
 function boolToString($value)
 {

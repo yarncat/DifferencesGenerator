@@ -10,7 +10,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use function DifferencesGenerator\Gendiff\genDiff;
+use function Differ\Gendiff\genDiff;
 
 const DOC = <<<DOC
 Generate diff
@@ -33,4 +33,8 @@ $pathToFirstFile = $args->args['<firstFile>'];
 $pathToSecondFile = $args->args['<secondFile>'];
 $format = $args->args['--format'];
 
-echo genDiff($pathToFirstFile, $pathToSecondFile, $format);
+try {
+    echo genDiff($pathToFirstFile, $pathToSecondFile, $format);
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
