@@ -9,38 +9,34 @@ use function Differ\Formatters\Formatter\makeIndent;
 function renderStylish($tree)
 {
     $iter = function ($tree, $level) use (&$iter) {
-        return array_reduce($tree, function ($acc, $element) use ($iter, $level) {
+        return array_map(function ($element) use ($iter, $level) {
             $indent = makeIndent($level);
             $extraIndent = makeIndent($level - 0.5);
             switch ($element['status']) {
                 case 'parent':
-                    $acc[] = "{$indent}{$element['key']}: {";
-                    $acc[] = $iter($element['children'], $level + 1);
-                    $acc[] = "{$indent}}";
-                    break;
+                    $key = "{$indent}{$element['key']}: {";
+                    $body = $iter($element['children'], $level + 1);
+                    $closeBracket = "{$indent}}";
+                    return [$key, $body, $closeBracket];
                 case 'added':
                     $normalizeValue = toString($element['value'], $level);
-                    $acc[] = "{$extraIndent}+ {$element['key']}: {$normalizeValue}";
-                    break;
+                    return "{$extraIndent}+ {$element['key']}: {$normalizeValue}";
                 case 'deleted':
                     $normalizeValue = toString($element['value'], $level);
-                    $acc[] = "{$extraIndent}- {$element['key']}: {$normalizeValue}";
-                    break;
+                    return "{$extraIndent}- {$element['key']}: {$normalizeValue}";
                 case 'changed':
                     $normalizeOldValue = toString($element['oldValue'], $level);
                     $normalizeNewValue = toString($element['newValue'], $level);
-                    $acc[] = "{$extraIndent}- {$element['key']}: {$normalizeOldValue}";
-                    $acc[] = "{$extraIndent}+ {$element['key']}: {$normalizeNewValue}";
-                    break;
+                    $oldValue = "{$extraIndent}- {$element['key']}: {$normalizeOldValue}";
+                    $newValue = "{$extraIndent}+ {$element['key']}: {$normalizeNewValue}";
+                    return [$oldValue, $newValue];
                 case 'unchanged':
                     $normalizeValue = toString($element['value'], $level);
-                    $acc[] = "{$indent}{$element['key']}: {$normalizeValue}";
-                    break;
+                    return "{$indent}{$element['key']}: {$normalizeValue}";
                 default:
                     throw new \Exception("Tree rendering error: unknown node type\n");
             }
-            return $acc;
-        }, []);
+        }, $tree);
     };
     $result = flatten($iter($tree, 1));
     return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
