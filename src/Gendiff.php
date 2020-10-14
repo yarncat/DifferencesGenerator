@@ -2,28 +2,26 @@
 
 namespace Differ\Gendiff;
 
-use function Differ\Parsers\parseFile;
-use function Differ\Formatters\Json\renderJson;
-use function Differ\Formatters\Plain\renderPlain;
-use function Differ\Formatters\Stylish\renderStylish;
+use function Differ\Parsers\parse;
+use function Differ\Formatters\Renders\render;
 
 function genDiff($firstFile, $secondFile, $format)
 {
-    $file1 = parseFile($firstFile);
-    $file2 = parseFile($secondFile);
+    $file1 = getData($firstFile);
+    $file2 = getData($secondFile);
 
     $tree = buildTree($file1, $file2);
+    return render($tree, $format);
+}
 
-    switch ($format) {
-        case 'json':
-            return renderJson($tree);
-        case 'plain':
-            return renderPlain($tree);
-        case 'stylish':
-            return renderStylish($tree);
-        default:
-            throw new \Exception("Unknown output format: '{$format}'!\n");
+function getData($file)
+{
+    if (!file_exists($file)) {
+        throw new \Exception("File '{$file}' is not exist or the specified path is incorrect\n");
     }
+    $data = file_get_contents($file);
+    $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+    return parse($data, $fileExtension);
 }
 
 function buildTree($data1, $data2)

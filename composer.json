@@ -17,6 +17,7 @@
             "src/Gendiff.php",
             "src/Parsers.php",
             "src/Formatters/Formatter.php",
+            "src/Formatters/Renders.php",
             "src/Formatters/Stylish.php",
             "src/Formatters/Plain.php",
             "src/Formatters/Json.php"

@@ -20,17 +20,27 @@ function renderPlain($tree)
     $iter = function ($tree, $root) use (&$iter) {
         return array_reduce($tree, function ($acc, $element) use ($iter, $root) {
             $path = "{$root}{$element['key']}";
-            if ($element['status'] === 'parent') {
-                $acc[] = $iter($element['children'], "{$path}.");
-            } elseif ($element['status'] === 'added') {
-                $normalizeValue = normalize($element['value']);
-                $acc[] = "Property '{$path}' was added with value: {$normalizeValue}";
-            } elseif ($element['status'] === 'deleted') {
-                $acc[] = "Property '{$path}' was removed";
-            } elseif ($element['status'] === 'changed') {
-                $normalizeOldValue = normalize($element['oldValue']);
-                $normalizeNewValue = normalize($element['newValue']);
-                $acc[] = "Property '{$path}' was updated. From {$normalizeOldValue} to {$normalizeNewValue}";
+            switch ($element['status']) {
+                case 'parent':
+                    $acc[] = $iter($element['children'], "{$path}.");
+                    break;
+                case 'added':
+                    $normalizeValue = normalize($element['value']);
+                    $acc[] = "Property '{$path}' was added with value: {$normalizeValue}";
+                    break;
+                case 'deleted':
+                    $acc[] = "Property '{$path}' was removed";
+                    break;
+                case 'changed':
+                    $normalizeOldValue = normalize($element['oldValue']);
+                    $normalizeNewValue = normalize($element['newValue']);
+                    $acc[] = "Property '{$path}' was updated. From {$normalizeOldValue} to {$normalizeNewValue}";
+                    break;
+                case 'unchanged':
+                    $acc[] = [];
+                    break;
+                default:
+                    throw new \Exception("Tree rendering error: unknown node type\n");
             }
             return $acc;
         }, []);
