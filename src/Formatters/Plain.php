@@ -18,32 +18,26 @@ function normalize($value)
 function renderPlain($tree)
 {
     $iter = function ($tree, $root) use (&$iter) {
-        return array_reduce($tree, function ($acc, $element) use ($iter, $root) {
+        return array_map(function ($element) use ($iter, $root) {
             $path = "{$root}{$element['key']}";
             switch ($element['status']) {
                 case 'parent':
-                    $acc[] = $iter($element['children'], "{$path}.");
-                    break;
+                    return $iter($element['children'], "{$path}.");
                 case 'added':
                     $normalizeValue = normalize($element['value']);
-                    $acc[] = "Property '{$path}' was added with value: {$normalizeValue}";
-                    break;
+                    return "Property '{$path}' was added with value: {$normalizeValue}";
                 case 'deleted':
-                    $acc[] = "Property '{$path}' was removed";
-                    break;
+                    return "Property '{$path}' was removed";
                 case 'changed':
                     $normalizeOldValue = normalize($element['oldValue']);
                     $normalizeNewValue = normalize($element['newValue']);
-                    $acc[] = "Property '{$path}' was updated. From {$normalizeOldValue} to {$normalizeNewValue}";
-                    break;
+                    return "Property '{$path}' was updated. From {$normalizeOldValue} to {$normalizeNewValue}";
                 case 'unchanged':
-                    $acc[] = [];
-                    break;
+                    return [];
                 default:
                     throw new \Exception("Tree rendering error: unknown node type\n");
             }
-            return $acc;
-        }, []);
+        }, $tree);
     };
     $result = flatten($iter($tree, ''));
     return implode("\n", $result) . "\n";
