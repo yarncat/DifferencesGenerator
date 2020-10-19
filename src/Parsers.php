@@ -13,6 +13,6 @@ function parse($data, $dataType)
         case 'yaml':
             return Yaml::parse($data, Yaml::PARSE_OBJECT_FOR_MAP);
         default:
-            throw new \Exception("Unsupported or unknown format: '{$dataType}'\n");
+            throw new \Exception("Unsupported or unknown format: '{$dataType}'");
     }
 }

@@ -2,15 +2,14 @@
 
 namespace Differ\Formatters\Plain;
 
-use function Differ\Formatters\Formatter\boolToString;
-use function Differ\Formatters\Formatter\flatten;
+use function Funct\Collection\flattenAll;
 
 function normalize($value)
 {
     if (is_object($value) || is_array($value)) {
         return '[complex value]';
     } elseif (is_bool($value)) {
-        return boolToString($value);
+        return $value ? 'true' : 'false';
     }
     return "'{$value}'";
 }
@@ -35,10 +34,10 @@ function renderPlain($tree)
                 case 'unchanged':
                     return [];
                 default:
-                    throw new \Exception("Tree rendering error: unknown node type\n");
+                    throw new \Exception("Tree rendering error: unknown node type");
             }
         }, $tree);
     };
-    $result = flatten($iter($tree, ''));
+    $result = flattenAll($iter($tree, ''));
     return implode("\n", $result) . "\n";
 }

@@ -2,9 +2,12 @@
 
 namespace Differ\Formatters\Stylish;
 
-use function Differ\Formatters\Formatter\boolToString;
-use function Differ\Formatters\Formatter\flatten;
-use function Differ\Formatters\Formatter\makeIndent;
+use function Funct\Collection\flattenAll;
+
+function makeIndent($level)
+{
+    return str_repeat(' ', $level * 4);
+}
 
 function renderStylish($tree)
 {
@@ -34,12 +37,20 @@ function renderStylish($tree)
                     $normalizeValue = toString($element['value'], $level);
                     return "{$indent}{$element['key']}: {$normalizeValue}";
                 default:
-                    throw new \Exception("Tree rendering error: unknown node type\n");
+                    throw new \Exception("Tree rendering error: unknown node type");
             }
         }, $tree);
     };
-    $result = flatten($iter($tree, 1));
+    $result = flattenAll($iter($tree, 1));
     return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
+}
+
+function boolToString($value)
+{
+    if (is_bool($value)) {
+        return $value ? 'true' : 'false';
+    }
+    return $value;
 }
 
 function toString($value, $level = 0)

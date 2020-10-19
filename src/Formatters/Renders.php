@@ -16,6 +16,6 @@ function render($tree, $format)
         case 'stylish':
             return renderStylish($tree);
         default:
-            throw new \Exception("Unknown output format: '{$format}'!\n");
+            throw new \Exception("Unknown output format: '{$format}'!");
     }
 }

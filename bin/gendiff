@@ -27,7 +27,7 @@ Options:
 
 DOC;
 
-$args = Docopt::handle(DOC, array('version'=>'GenDiff version 1.0.0'));
+$args = Docopt::handle(DOC, ['version'=>'GenDiff version 1.0.0']);
 
 $pathToFirstFile = $args->args['<firstFile>'];
 $pathToSecondFile = $args->args['<secondFile>'];
@@ -37,4 +37,6 @@ try {
     echo genDiff($pathToFirstFile, $pathToSecondFile, $format);
 } catch (\Exception $e) {
     echo $e->getMessage();
+    echo "\n";
+    exit();
 }

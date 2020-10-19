@@ -16,7 +16,6 @@
         "files": [
             "src/Gendiff.php",
             "src/Parsers.php",
-            "src/Formatters/Formatter.php",
             "src/Formatters/Renders.php",
             "src/Formatters/Stylish.php",
             "src/Formatters/Plain.php",
@@ -25,7 +24,8 @@
     },
     "require": {
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^5.1"
+        "symfony/yaml": "^5.1",
+        "funct/funct": "^1.5"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

@@ -5,8 +5,6 @@ namespace Differ\Tests;
 use PHPUnit\Framework\TestCase;
 
 use function Differ\Gendiff\genDiff;
-use function Differ\Formatters\Stylish\renderStylish;
-use function Differ\Formatters\Plain\renderPlain;
 
 class GendiffTest extends TestCase
 {
@@ -36,7 +34,7 @@ class GendiffTest extends TestCase
     }
 
     /**
-     * @dataProvider uncorrectFileProvider
+     * @dataProvider exceptionProvider
      */
 
     public function testException($firstFile, $secondFile, $format, $expected)
@@ -45,29 +43,13 @@ class GendiffTest extends TestCase
         genDiff(self::DIR . $firstFile, self::DIR . $secondFile, $format);
     }
 
-    public function uncorrectFileProvider()
+    public function exceptionProvider()
     {
         return [
             ['flatFile.json', 'flatFile2.json', 'stylish',
-                "File 'tests/fixtures/flatFile.json' is not exist or the specified path is incorrect\n"],
-            ['jsonDiff.txt', 'plainDiff.txt', 'plain', "Unsupported or unknown format: 'txt'\n"],
-            ['nestedStructure1.yaml', 'nestedStructure2.yaml', 'lolkek', "Unknown output format: 'lolkek'!\n"]
+                "File 'tests/fixtures/flatFile.json' is not exist or the specified path is incorrect"],
+            ['jsonDiff.txt', 'plainDiff.txt', 'plain', "Unsupported or unknown format: 'txt'"],
+            ['nestedStructure1.yaml', 'nestedStructure2.yaml', 'lolkek', "Unknown output format: 'lolkek'!"]
         ];
-    }
-
-    public function testInvalidTreeRenderingStylish()
-    {
-        $data = file_get_contents(self::DIR . 'invalidTree.txt');
-        $tree = json_decode($data, true);
-        $this->expectExceptionMessage("Tree rendering error: unknown node type\n");
-        renderStylish($tree);
-    }
-
-    public function testInvalidTreeRenderingPlain()
-    {
-        $data = file_get_contents(self::DIR . 'invalidTree.txt');
-        $tree = json_decode($data, true);
-        $this->expectExceptionMessage("Tree rendering error: unknown node type\n");
-        renderPlain($tree);
     }
 }

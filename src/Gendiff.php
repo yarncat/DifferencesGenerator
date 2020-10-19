@@ -5,10 +5,10 @@ namespace Differ\Gendiff;
 use function Differ\Parsers\parse;
 use function Differ\Formatters\Renders\render;
 
-function genDiff($firstFile, $secondFile, $format)
+function genDiff($pathToFirstFile, $pathToSecondFile, $format)
 {
-    $file1 = getData($firstFile);
-    $file2 = getData($secondFile);
+    $file1 = getData($pathToFirstFile);
+    $file2 = getData($pathToSecondFile);
 
     $tree = buildTree($file1, $file2);
     return render($tree, $format);
@@ -17,7 +17,7 @@ function genDiff($firstFile, $secondFile, $format)
 function getData($file)
 {
     if (!file_exists($file)) {
-        throw new \Exception("File '{$file}' is not exist or the specified path is incorrect\n");
+        throw new \Exception("File '{$file}' is not exist or the specified path is incorrect");
     }
     $data = file_get_contents($file);
     $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
