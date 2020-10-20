@@ -39,5 +39,5 @@ function renderPlain($tree)
         }, $tree);
     };
     $result = flattenAll($iter($tree, ''));
-    return implode("\n", $result) . "\n";
+    return implode("\n", $result);
 }

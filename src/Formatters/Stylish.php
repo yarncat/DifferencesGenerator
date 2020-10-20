@@ -42,7 +42,7 @@ function renderStylish($tree)
         }, $tree);
     };
     $result = flattenAll($iter($tree, 1));
-    return "{" . "\n" . implode("\n", $result) . "\n" . "}" . "\n";
+    return "{" . "\n" . implode("\n", $result) . "\n" . "}";
 }
 
 function boolToString($value)
