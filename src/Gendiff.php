@@ -7,20 +7,20 @@ use function Differ\Formatters\Renders\render;
 
 function genDiff($pathToFirstFile, $pathToSecondFile, $format)
 {
-    $file1 = getData($pathToFirstFile);
-    $file2 = getData($pathToSecondFile);
+    $data1 = getData($pathToFirstFile);
+    $data2 = getData($pathToSecondFile);
 
-    $tree = buildTree($file1, $file2);
+    $tree = buildTree($data1, $data2);
     return render($tree, $format);
 }
 
-function getData($file)
+function getData($pathToFile)
 {
-    if (!file_exists($file)) {
-        throw new \Exception("File '{$file}' is not exist or the specified path is incorrect");
+    if (!file_exists($pathToFile)) {
+        throw new \Exception("File '{$pathToFile}' is not exist or the specified path is incorrect");
     }
-    $data = file_get_contents($file);
-    $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+    $data = file_get_contents($pathToFile);
+    $fileExtension = pathinfo($pathToFile, PATHINFO_EXTENSION);
     return parse($data, $fileExtension);
 }
 
